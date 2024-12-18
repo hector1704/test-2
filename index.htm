@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lista de Tarefas</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- Link para o Fireworks.js -->
+  <script src="https://cdn.jsdelivr.net/npm/fireworks-js/dist/index.min.js"></script>
+</head>
+<body>
+  <div class="container">
+    <h1>Lista de Tarefas</h1>
+    <p>Adicione suas tarefas!</p>
+    <input type="text" id="inputTarefa" placeholder="Digite a sua tarefa">
+    <button onclick="adicionarTarefa()">Adicionar Tarefa</button>
+    <p id="mensagem"></p>
+    <ul id="listaTarefas"></ul>
+  </div>
+
+  <script>
+    // Configuração dos fogos de artifício
+    const container = document.body;
+    const fireworks = new Fireworks.default(container, {
+      speed: 4, // velocidade dos fogos
+      opacity: 0.7, // opacidade dos fogos
+      particles: 80, // quantidade de partículas
+      sound: true, // ativar som dos fogos
+      mouse: { click: true, move: true } // ativar efeitos com o mouse
+    });
+
+    // Função que adiciona a tarefa e dispara os fogos
+    function adicionarTarefa() {
+      // Mensagem de sucesso ao adicionar a tarefa
+      let mensagem = "Tarefa adicionada com sucesso!";
+      document.getElementById("mensagem").textContent = mensagem;
+
+      // Obtém o valor da tarefa digitada
+      let inputTarefa = document.getElementById("inputTarefa");
+      let Tarefa = inputTarefa.value;
+
+      // Exibe a tarefa no console
+      console.log("Tarefa digitada:", Tarefa);
+
+      // Verifica se o campo de entrada não está vazio
+      if (Tarefa.trim() === "") {
+        document.getElementById("mensagem").textContent = "Por favor, insira uma tarefa!";
+        return; // Impede a execução do restante do código se a tarefa estiver vazia
+      }
+
+      // Adiciona a tarefa à lista de tarefas
+      let lista = document.getElementById("listaTarefas");
+      let li = document.createElement("li");
+      li.textContent = Tarefa;
+      lista.appendChild(li);
+
+      // Limpa o campo de entrada após adicionar a tarefa
+      inputTarefa.value = "";
+
+      // Dispara os fogos de artifício
+      fireworks.start();
+
+      // Para os fogos após 5 segundos para não sobrecarregar
+      setTimeout(() => fireworks.stop(), 5000);
+    }
+  </script>
+</body>
+</html>
